@@ -14,16 +14,31 @@ import http from 'http'
 //GET /users -> Buscar usuário no backend
 //POST /users -> Criar usuário no backend
 
+// Stateful - stateless
+
+//JSON -> Javascript Object Notation 
+
+// Cabeçalho (Requisição/resposta) => Metadados
+
+const users = []
 
 const server = http.createServer((req, res) => {
 	const {method, url} = req
 
 	if(method === 'GET' && url === '/users'){
- 	   return res.end('Usuarios recuperados')
+ 	   return res
+	   .setHeader('Content-Type', 'application/json')
+	   .end(JSON.stringify(users))
 	}
 
 	if(method === 'POST' && url === '/users'){
- 	   return res.end('Usuarios cadastrado')
+ 	   users.push({
+	      id: 1, 
+	      nome: 'Jefinho',
+	      idade: '34', 
+	      email: 'jef.profifms@ifms.edu.br'
+	})
+ 	return res.end('Usuarios cadastrado')
 	}
 	res.end('Hello World')
 })
